@@ -669,6 +669,8 @@ void getSettingsJS(byte subPage, char* dest)
     sappend('v',SET_F("CG"),DMXGap);
     sappend('v',SET_F("CS"),DMXStart);
     sappend('v',SET_F("SL"),DMXStartLED);
+    sappend('v', SET_F("GZ"),DMXGroupSize);
+    sappend('v', SET_F("GP"),DMXGroupSpacing);
 
     sappend('i',SET_F("CH1"),DMXFixtureMap[0]);
     sappend('i',SET_F("CH2"),DMXFixtureMap[1]);

@@ -513,6 +513,8 @@ String dmxProcessor(const String& var)
       mapJS += "\nCN=" + String(DMXChannels) + ";\n";
       mapJS += "CS=" + String(DMXStart) + ";\n";
       mapJS += "CG=" + String(DMXGap) + ";\n";
+      mapJS += "GZ=" + String(DMXGroupSize) + ";\n";
+      mapJS += "GP=" + String(DMXGroupSpacing) + ";\n";
       mapJS += "LC=" + String(strip.getLengthTotal()) + ";\n";
       mapJS += "var CH=[";
       for (int i=0;i<15;i++) {

@@ -35,7 +35,7 @@
 #else
   #undef WLED_ENABLE_ADALIGHT      // disable has priority over enable
 #endif
-//#define WLED_ENABLE_DMX          // uses 3.5kb (use LEDPIN other than 2)
+#define WLED_ENABLE_DMX          // uses 3.5kb (use LEDPIN other than 2)
 #define WLED_ENABLE_JSONLIVE     // peek LED output via /json/live (WS binary peek is always enabled)
 #ifndef WLED_DISABLE_LOXONE
   #define WLED_ENABLE_LOXONE       // uses 1.2kb
@@ -512,6 +512,8 @@ WLED_GLOBAL uint16_t userVar0 _INIT(0), userVar1 _INIT(0); //available for use i
   WLED_GLOBAL uint16_t DMXGap _INIT(10);          // gap between the fixtures. makes addressing easier because you don't have to memorize odd numbers when climbing up onto a rig.
   WLED_GLOBAL uint16_t DMXStart _INIT(10);        // start address of the first fixture
   WLED_GLOBAL uint16_t DMXStartLED _INIT(0);      // LED from which DMX fixtures start
+  WLED_GLOBAL uint16_t DMXGroupSize _INIT(0);     // DNX fixtures per group
+  WLED_GLOBAL uint16_t DMXGroupSpacing _INIT(0);  // Spacing between DMX fixture groups
 #endif
 
 // internal global variable declarations

@@ -27,7 +27,9 @@ void handleDMX()
      if (DMXFixtureMap[i] == 5) calc_brightness = false;
    }
 
-  uint16_t len = strip.getLengthTotal();
+  int groupCnt = 0, group = 0;
+  bool groupEnd = false;
+  uint16_t len = strip.getLengthTotal(); 
   for (int i = DMXStartLED; i < len; i++) {        // uses the amount of LEDs as fixture count
 
     uint32_t in = strip.getPixelColor(i);     // get the colors for the individual fixtures as suggested by Aircoookie in issue #462
@@ -36,9 +38,18 @@ void handleDMX()
     byte g = G(in);
     byte b = B(in);
 
-    int DMXFixtureStart = DMXStart + (DMXGap * (i - DMXStartLED));
+    int DMXFixtureStart = DMXStart + (DMXGap * (i - DMXStartLED)) + group * DMXGroupSpacing;
+
+    groupCnt++;
+    if (groupCnt == DMXGroupSize) {
+      groupCnt = 1;
+      group++;
+      groupEnd = true;
+    }
+
+    int DMXAddr = 0;
     for (int j = 0; j < DMXChannels; j++) {
-      int DMXAddr = DMXFixtureStart + j;
+      DMXAddr = DMXFixtureStart + j;
       switch (DMXFixtureMap[j]) {
         case 0:        // Set this channel to 0. Good way to tell strobe- and fade-functions to fuck right off.
           dmx.write(DMXAddr, 0);
@@ -61,6 +72,14 @@ void handleDMX()
         case 6:        // Sets this channel to 255. Like 0, but more wholesome.
           dmx.write(DMXAddr, 255);
           break;
+      }
+    }
+
+    if (groupEnd) {
+      groupEnd = false;
+      for (int j = 0; j < DMXGroupSpacing; j++) {
+        DMXAddr++;
+        dmx.write(DMXAddr, 0);
       }
     }
   }
